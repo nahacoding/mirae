@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 리더 서약 카드 만들기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Black+Han+Sans&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Nanum Gothic', sans-serif; background-color: #f8fafc; }
+        .title-font { font-family: 'Black Han Sans', sans-serif; }
+        
+        .theme-blue {
+            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+            border: 8px solid #3b82f6;
+            color: #1e3a8a;
+        }
+        .theme-pink {
+            background: linear-gradient(135deg, #ffffff 0%, #fff1f2 100%);
+            border: 8px solid #f43f5e;
+            color: #881337;
+        }
+        .theme-yellow {
+            background: linear-gradient(135deg, #ffffff 0%, #fefce8 100%);
+            border: 8px solid #eab308;
+            color: #713f12;
+        }
+
+        .template-option {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 4px solid transparent;
+        }
+        .template-option.selected {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden { display: none; }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="input-section" class="bg-white p-8 rounded-3xl shadow-xl max-w-xl w-full border-2 border-slate-100">
+        <h1 class="title-font text-4xl text-center text-slate-800 mb-2">🤖 AI 리더 서약 카드</h1>
+        <p class="text-center text-slate-500 mb-8">생성형 AI를 올바르게 사용하는 멋진 리더가 되어봐요!</p>
+        
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-3">🎨 마음에 드는 디자인을 골라주세요</label>
+                <div class="grid grid-cols-3 gap-4 mb-2">
+                    <div onclick="selectTemplate('blue', this)" class="template-option selected bg-blue-50 p-3 rounded-2xl text-center border-blue-500">
+                        <div class="w-full h-12 bg-blue-500 rounded-lg mb-2"></div>
+                        <span class="text-sm font-bold text-blue-700">신뢰의 블루</span>
+                    </div>
+                    <div onclick="selectTemplate('pink', this)" class="template-option bg-pink-50 p-3 rounded-2xl text-center">
+                        <div class="w-full h-12 bg-pink-500 rounded-lg mb-2"></div>
+                        <span class="text-sm font-bold text-pink-700">꿈꾸는 핑크</span>
+                    </div>
+                    <div onclick="selectTemplate('yellow', this)" class="template-option bg-yellow-50 p-3 rounded-2xl text-center">
+                        <div class="w-full h-12 bg-yellow-400 rounded-lg mb-2"></div>
+                        <span class="text-sm font-bold text-yellow-700">따스한 옐로우</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100">
+                <label class="block text-sm font-bold text-slate-700 mb-1">내 이름</label>
+                <input type="text" id="userName" placeholder="이름을 입력하세요" class="w-full p-3 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-blue-500 transition-colors">
+            </div>
+            
+            <div class="space-y-4">
+                <div class="group">
+                    <label class="block text-sm font-bold text-red-600 mb-1">❌ 절대 안 할 것 (약속!)</label>
+                    <input type="text" id="neverDo" placeholder="예: 친구 비난하는 글 쓰지 않기" class="w-full p-3 border-2 border-red-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-400">
+                </div>
+
+                <div class="group">
+                    <label class="block text-sm font-bold text-orange-600 mb-1">⚠️ 주의할 것 (조심!)</label>
+                    <input type="text" id="beCareful" placeholder="예: AI가 쓴 정보 꼭 확인하기" class="w-full p-3 border-2 border-orange-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400">
+                </div>
+
+                <div class="group">
+                    <label class="block text-sm font-bold text-green-600 mb-1">✨ 잘 활용할 것 (도전!)</label>
+                    <input type="text" id="useWell" placeholder="예: 새로운 아이디어 얻기" class="w-full p-3 border-2 border-green-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400">
+                </div>
+            </div>
+
+            <button onclick="generateCard()" class="w-full bg-slate-800 text-white font-bold py-4 rounded-2xl hover:bg-black transition-all transform hover:-translate-y-1 shadow-lg mt-4">
+                서약서 발행하기 🚀
+            </button>
+        </div>
+    </div>
+
+    <div id="signature-section" class="hidden max-w-xl w-full bg-white p-6 md:p-8 rounded-3xl shadow-xl border-2 border-slate-100">
+        <h2 class="title-font text-3xl md:text-4xl text-center text-slate-800 mb-3">✍️ 나의 서명하기</h2>
+        <p class="text-center text-slate-500 mb-2"><span id="signer-name" class="font-bold text-slate-800"></span>님, 아래 칸에 마우스나 손가락으로 서명해 주세요.</p>
+        <p class="text-center text-sm text-slate-400 mb-5">서명 칸 안에서 누른 채 움직이면 글씨가 그려집니다.</p>
+        <canvas id="signature-pad" aria-label="직접 서명하는 공간" class="block w-full bg-slate-50 rounded-2xl border-2 border-dashed border-blue-300" style="height:200px; touch-action:none; cursor:crosshair;"></canvas>
+        <p class="text-center text-sm mt-3 text-slate-500">상태: <span id="signature-status">아직 서명하지 않았어요.</span></p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+            <button type="button" onclick="resetForm()" class="bg-white border-2 border-slate-200 text-slate-600 font-bold py-3 rounded-xl hover:bg-slate-50">내용 수정</button>
+            <button type="button" onclick="clearSignature()" class="bg-amber-100 text-amber-800 font-bold py-3 rounded-xl hover:bg-amber-200">다시 서명</button>
+            <button type="button" onclick="finishSignature()" class="bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700">서명 완료 · 최종 서약서</button>
+        </div>
+    </div>
+
+    <div id="card-section" class="hidden max-w-2xl w-full">
+        <div id="capture-area" class="theme-blue p-12 rounded-[50px] relative overflow-hidden shadow-2xl">
+            <div id="deco-1" class="absolute -top-10 -right-10 w-48 h-48 bg-white rounded-full opacity-30"></div>
+            <div id="deco-2" class="absolute -bottom-10 -left-10 w-40 h-40 bg-white rounded-full opacity-30"></div>
+            
+            <div class="relative z-10 border-4 border-dashed border-current border-opacity-20 p-10 rounded-[40px] bg-white bg-opacity-40 backdrop-blur-sm">
+                <div class="text-center mb-12">
+                    <span id="badge-text" class="bg-blue-600 text-white px-8 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-4 inline-block">AI ETHICS LEADER</span>
+                    <h2 class="title-font text-5xl mb-3 tracking-tight">AI 바른 사용 서약서</h2>
+                    <div id="title-line" class="h-1.5 w-40 bg-current mx-auto rounded-full opacity-40"></div>
+                </div>
+
+                <div class="space-y-10 mb-16">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm text-3xl mr-5">❌</div>
+                        <div class="flex-1">
+                            <h4 id="label-never" class="text-red-500 font-bold text-lg mb-1">절대 하지 않겠습니다</h4>
+                            <p id="res-never" class="text-2xl font-bold border-b-4 border-red-100 inline-block min-w-[200px]"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm text-3xl mr-5">⚠️</div>
+                        <div class="flex-1">
+                            <h4 id="label-careful" class="text-orange-500 font-bold text-lg mb-1">주의하며 사용하겠습니다</h4>
+                            <p id="res-careful" class="text-2xl font-bold border-b-4 border-orange-100 inline-block min-w-[200px]"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 flex items-center justify-center bg-white rounded-2xl shadow-sm text-3xl mr-5">✨</div>
+                        <div class="flex-1">
+                            <h4 id="label-use" class="text-green-600 font-bold text-lg mb-1">지혜롭게 활용하겠습니다</h4>
+                            <p id="res-use" class="text-2xl font-bold border-b-4 border-green-100 inline-block min-w-[200px]"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t-2 border-current border-opacity-10">
+                    <div class="flex justify-between items-end mb-5">
+                        <div class="text-sm opacity-60">
+                            <p id="res-date" class="font-bold mb-1"></p>
+                            <p>디지털 윤리 교육 이수 완료</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="opacity-60 mb-2 text-sm font-medium">위의 내용을 약속합니다.</p>
+                            <p class="text-2xl md:text-3xl font-bold flex flex-wrap items-center justify-end gap-2">리더 : <span id="res-name" class="underline decoration-current decoration-4 underline-offset-8"></span><img id="final-signature" alt="작성한 서명" class="inline-block object-contain align-middle" style="width:96px; height:64px;" /></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-4 no-print">
+            <p class="text-center text-slate-600 text-sm">서명이 포함된 최종 서약서입니다. 이미지로 저장해 보세요.</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="backToSignature()" class="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-4 rounded-2xl hover:bg-slate-50 transition-all">서명 다시 하기</button>
+                <button onclick="resetForm()" class="flex-1 bg-white border-2 border-slate-200 text-slate-600 font-bold py-4 rounded-2xl hover:bg-slate-50 transition-all">내용 수정하기</button>
+                <button onclick="downloadImage()" id="download-btn" class="flex-1 bg-emerald-600 text-white font-bold py-4 rounded-2xl hover:opacity-90 transition-all shadow-xl">📷 서약서 이미지 저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTheme = 'blue';
+        let signatureContext = null;
+        let isSigning = false;
+        let hasSignature = false;
+
+        function selectTemplate(theme, element) {
+            currentTheme = theme;
+            document.querySelectorAll('.template-option').forEach(el => {
+                el.classList.remove('selected', 'border-blue-500', 'border-pink-500', 'border-yellow-500');
+            });
+            element.classList.add('selected');
+            element.classList.add(`border-${theme === 'yellow' ? 'yellow-500' : theme + '-500'}`);
+        }
+
+        function generateCard() {
+            const name = document.getElementById('userName').value.trim();
+            const never = document.getElementById('neverDo').value.trim();
+            const careful = document.getElementById('beCareful').value.trim();
+            const use = document.getElementById('useWell').value.trim();
+            if (!name || !never || !careful || !use) {
+                showToast("앗! 모든 항목을 정성껏 채워주세요. 😊");
+                return;
+            }
+
+            const card = document.getElementById('capture-area');
+            const badge = document.getElementById('badge-text');
+            const downloadBtn = document.getElementById('download-btn');
+            card.className = `p-6 md:p-12 rounded-[35px] md:rounded-[50px] relative overflow-hidden shadow-2xl theme-${currentTheme}`;
+            if (currentTheme === 'pink') {
+                badge.className = "bg-pink-600 text-white px-8 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-4 inline-block";
+                downloadBtn.className = "flex-1 bg-pink-600 text-white font-bold py-5 rounded-3xl hover:opacity-90 transition-all shadow-xl flex items-center justify-center gap-2";
+            } else if (currentTheme === 'yellow') {
+                badge.className = "bg-yellow-500 text-white px-8 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-4 inline-block";
+                downloadBtn.className = "flex-1 bg-yellow-500 text-white font-bold py-5 rounded-3xl hover:opacity-90 transition-all shadow-xl flex items-center justify-center gap-2";
+            } else {
+                badge.className = "bg-blue-600 text-white px-8 py-1.5 rounded-full text-xs font-bold tracking-[0.2em] uppercase mb-4 inline-block";
+                downloadBtn.className = "flex-1 bg-blue-600 text-white font-bold py-5 rounded-3xl hover:opacity-90 transition-all shadow-xl flex items-center justify-center gap-2";
+            }
+            document.getElementById('res-name').innerText = name;
+            document.getElementById('res-never').innerText = never;
+            document.getElementById('res-careful').innerText = careful;
+            document.getElementById('res-use').innerText = use;
+            const today = new Date();
+            document.getElementById('res-date').innerText = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+            document.getElementById('signer-name').textContent = name;
+
+            document.getElementById('input-section').classList.add('hidden');
+            document.getElementById('card-section').classList.add('hidden');
+            document.getElementById('signature-section').classList.remove('hidden');
+            hasSignature = false;
+            setupSignaturePad();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setupSignaturePad() {
+            const canvas = document.getElementById('signature-pad');
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const cssWidth = Math.max(280, rect.width || canvas.parentElement.clientWidth);
+            const cssHeight = 200;
+            const ratio = Math.max(1, window.devicePixelRatio || 1);
+            canvas.style.width = '100%';
+            canvas.style.height = cssHeight + 'px';
+            canvas.width = Math.round(cssWidth * ratio);
+            canvas.height = Math.round(cssHeight * ratio);
+            signatureContext = canvas.getContext('2d');
+            signatureContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+            signatureContext.lineWidth = 3;
+            signatureContext.lineCap = 'round';
+            signatureContext.lineJoin = 'round';
+            signatureContext.strokeStyle = '#172554';
+            canvas.onpointerdown = function(event) {
+                event.preventDefault();
+                isSigning = true;
+                canvas.setPointerCapture(event.pointerId);
+                const r = canvas.getBoundingClientRect();
+                signatureContext.beginPath();
+                signatureContext.moveTo(event.clientX - r.left, event.clientY - r.top);
+                // 클릭/탭만 해도 서명 입력으로 인식하도록 표시합니다.
+                signatureContext.lineTo(event.clientX - r.left + 0.1, event.clientY - r.top + 0.1);
+                signatureContext.stroke();
+                hasSignature = true;
+                document.getElementById('signature-status').textContent = '서명이 입력되었어요.';
+            };
+            canvas.onpointermove = function(event) {
+                if (!isSigning) return;
+                event.preventDefault();
+                const r = canvas.getBoundingClientRect();
+                signatureContext.lineTo(event.clientX - r.left, event.clientY - r.top);
+                signatureContext.stroke();
+                hasSignature = true;
+                document.getElementById('signature-status').textContent = '서명이 입력되었어요.';
+            };
+            const stop = () => { isSigning = false; };
+            canvas.onpointerup = stop;
+            canvas.onpointercancel = stop;
+            canvas.onlostpointercapture = stop;
+        }
+
+        function clearSignature() {
+            const canvas = document.getElementById('signature-pad');
+            if (!canvas || !signatureContext) return;
+            signatureContext.clearRect(0, 0, canvas.width, canvas.height);
+            hasSignature = false;
+            document.getElementById('signature-status').textContent = '아직 서명하지 않았어요.';
+        }
+
+        function finishSignature() {
+            if (!hasSignature) {
+                showToast('먼저 서명 칸에 서명해 주세요. ✍️');
+                return;
+            }
+            const canvas = document.getElementById('signature-pad');
+            document.getElementById('final-signature').src = canvas.toDataURL('image/png');
+            document.getElementById('signature-section').classList.add('hidden');
+            document.getElementById('card-section').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backToSignature() {
+            document.getElementById('card-section').classList.add('hidden');
+            document.getElementById('signature-section').classList.remove('hidden');
+            setupSignaturePad();
+            // 캔버스를 다시 설정하면 기존 획이 초기화되므로 서명 이미지를 캔버스에 복원합니다.
+            const img = document.getElementById('final-signature');
+            if (img.src) {
+                const canvas = document.getElementById('signature-pad');
+                const ctx = signatureContext;
+                const image = new Image();
+                image.onload = () => {
+                    const r = canvas.getBoundingClientRect();
+                    ctx.drawImage(image, 0, 0, r.width, 200);
+                    hasSignature = true;
+                };
+                image.src = img.src;
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function downloadImage() {
+            const card = document.getElementById('capture-area');
+            html2canvas(card, { scale: 2, useCORS: true, backgroundColor: null }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'AI_리더_서약카드.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(() => showToast('이미지 저장에 실패했어요. 다시 시도해 주세요.'));
+        }
+
+        function resetForm() {
+            document.getElementById('input-section').classList.remove('hidden');
+            document.getElementById('signature-section').classList.add('hidden');
+            document.getElementById('card-section').classList.add('hidden');
+            hasSignature = false;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-8 py-4 rounded-2xl shadow-2xl z-50 animate-bounce";
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+    </script>
+</body>
+</html>
