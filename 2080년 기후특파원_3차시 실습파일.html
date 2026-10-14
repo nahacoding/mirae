@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2080년 인천 기후특파원 '나미래'의 프롬프트 평가서</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Noto Sans KR, Orbitron) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2canvas for Screenshot functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #050811;
+            color: #f1f5f9; /* Increased text brightness for maximum contrast */
+            -webkit-font-smoothing: antialiased; /* Crisp text rendering on Webkit browsers */
+            -moz-osx-font-smoothing: grayscale; /* Crisp text rendering on Firefox */
+            text-rendering: optimizeLegibility; /* Maximize font rendering quality */
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .neon-border-red {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        .neon-border-cyan {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.25);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+        }
+        .neon-text-red {
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0f1d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        @keyframes slideProgress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .animate-progress-slide {
+            animation: slideProgress 1.5s infinite linear;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#050811]">
+
+    <!-- Header -->
+    <header class="border-b border-red-900/40 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center border border-red-500/50 text-red-400 text-xl animate-pulse">
+                    <i class="fa-solid fa-tower-broadcast animate-bounce"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wider text-red-500 font-orbitron flex items-center gap-2">
+                        <span>EMERGENCY SOS: 2080</span>
+                        <span class="text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded font-sans animate-pulse">CHRONO LINK</span>
+                    </h1>
+                    <p class="text-xs text-slate-300">발신지: 수몰된 인천 계양산 임시 대피캠프 5호기</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-orbitron">
+                <div class="bg-slate-900 px-3 py-1.5 rounded-md border border-red-950 text-slate-300">
+                    <span class="text-red-400 font-bold">INCHEON BAY:</span> <span class="text-blue-400">98% FLOODED</span>
+                </div>
+                <div class="bg-slate-900 px-3 py-1.5 rounded-md border border-red-950 text-slate-300">
+                    <span class="text-red-400 font-bold">GLOBAL TEMP:</span> <span class="text-red-500 font-bold">+3.2°C</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Left Column: Reporter Profile & Input -->
+        <div class="w-full lg:w-5/12 flex flex-col gap-6">
+            
+            <!-- Reporter Profile: 나미래 -->
+            <div class="bg-slate-950/95 rounded-2xl p-6 border border-red-900/30 neon-border-red">
+                <div class="flex items-start gap-4">
+                    <div class="relative flex-shrink-0">
+                        <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-red-500 bg-slate-900 flex items-center justify-center">
+                            <!-- SVG Avatar for Reporter 나미래 -->
+                            <svg class="w-12 h-12 text-red-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
+                            </svg>
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-4 h-4 bg-red-500 border-2 border-slate-950 rounded-full animate-ping"></span>
+                        <span class="absolute bottom-0 right-0 w-4 h-4 bg-red-600 border-2 border-slate-950 rounded-full"></span>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold bg-red-950 text-red-400 border border-red-800 px-2 py-0.5 rounded">종말방지 특파원</span>
+                            <span class="text-slate-300 font-orbitron text-xs">NAME: 나미래</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-slate-100 mt-1">나미래 기후특파원</h2>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                            "인천 송도국제도시와 인천대교가 차디찬 바닷속으로 흔적도 없이 잠겨버렸소! 이곳의 참상을 알리고 2026년 인류의 마음을 움직일 <strong>'초강력 경고 기사'</strong>를 써내야 역사가 바뀝니다. 자네가 준비한 프롬프트를 쏘아 올리면, 내가 RTCF 기준으로 냉혹하고 정밀하게 채점해서 보완책을 전수해주겠소!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Form (Single line text input with adjacent button) -->
+            <div class="bg-slate-950/90 rounded-2xl p-6 border border-slate-800/80 flex flex-col gap-4 neon-border-cyan">
+                <div>
+                    <h3 class="text-base font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-nib"></i> 기사 작성 프롬프트 송신부
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">2026년 과거 세계의 사람들을 구원할 경고 기사 작성용 프롬프트를 한 줄로 간결히 기재하여 전송하십시오.</p>
+                </div>
+
+                <!-- Horizontal layout: 1 Line Input + Small Adjacent Send Button -->
+                <div class="flex items-center gap-2 w-full bg-slate-900 p-1.5 rounded-xl border border-slate-800 focus-within:border-cyan-500/80 transition-all">
+                    <input 
+                        type="text"
+                        id="promptInput" 
+                        class="flex-grow bg-transparent px-3 py-2 text-slate-200 focus:outline-none placeholder-slate-600 text-xs sm:text-sm h-10 w-full"
+                        placeholder="나미래 기자에게 보낼 기사 지시사항(프롬프트)을 입력하십시오..."
+                        onkeydown="if(event.key === 'Enter') analyzePrompt()"
+                    >
+                    <button 
+                        id="analyzeBtn"
+                        onclick="analyzePrompt()"
+                        class="flex-shrink-0 h-10 px-5 rounded-lg bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white text-xs font-extrabold tracking-widest hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] active:scale-[0.97] transition-all flex items-center gap-1 border border-red-500/30"
+                    >
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>전송</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Analysis Results -->
+        <div class="w-full lg:w-7/12 flex flex-col">
+            
+            <div id="resultContainer" class="bg-slate-950/90 rounded-2xl border border-slate-800/80 p-6 flex-grow flex flex-col justify-center items-center min-h-[480px] relative overflow-hidden">
+                
+                <!-- Initial State Placeholder -->
+                <div id="placeholderState" class="text-center py-12 px-6">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-slate-900 flex items-center justify-center border border-slate-800 mb-6 text-slate-600">
+                        <i class="fa-solid fa-chart-line text-4xl animate-pulse"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-300">시간축 전파 대기 중</h3>
+                    <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
+                        왼쪽 텍스트 입력창에 기사 작성 지령을 탑재한 뒤, 오른쪽의 <strong>[전송]</strong> 버튼을 누르거나 엔터키를 입력해 주십시오.
+                    </p>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="hidden text-center py-12 px-6">
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <div class="absolute inset-0 rounded-full border-4 border-red-500/10 border-t-red-500 animate-spin"></div>
+                        <div class="absolute inset-3 rounded-full border border-cyan-500/20 border-b-cyan-400 animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
+                        <div class="absolute inset-0 flex items-center justify-center text-red-400 text-3xl font-orbitron font-bold">
+                            SOS
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-red-400 font-orbitron animate-pulse">DECODING PROMPT SIGNAL...</h3>
+                    <p class="text-xs text-slate-500 mt-2 font-mono">
+                        나미래 기자 전용 기후 저널리즘 인공지능 '알파-인천' 채점 모듈 가동 중...
+                    </p>
+                    <div class="w-48 bg-slate-900 h-1.5 rounded-full mx-auto mt-4 overflow-hidden border border-slate-800">
+                        <div class="bg-red-500 h-full animate-progress-slide" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Real Analysis Report -->
+                <div id="reportState" class="hidden w-full flex-col h-full gap-6">
+                    
+                    <!-- Top Score Panel -->
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6 bg-slate-900/60 p-5 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-4">
+                            <!-- Circular Score Progress SVG -->
+                            <div class="relative w-24 h-24">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="48" cy="48" r="40" stroke="currentColor" class="text-slate-800" stroke-width="8" fill="transparent" />
+                                    <circle id="scoreProgressCircle" cx="48" cy="48" r="40" stroke="currentColor" class="text-red-500 transition-all duration-1000" stroke-width="8" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span id="totalScoreText" class="text-2xl font-bold font-orbitron text-red-400">0</span>
+                                    <span class="text-[9px] text-slate-500 font-bold tracking-wider">SCORE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xs text-slate-400 font-mono">CHRONO-ANALYSIS OK // SEC-2080</h4>
+                                <h3 id="gradeTitle" class="text-base sm:text-lg font-black text-white mt-1">인구 보강이 시급한 신호망</h3>
+                                <p class="text-xs text-slate-400 mt-1">미래 전파 도달률: <span id="accessLevelText" class="font-bold"></span></p>
+                            </div>
+                        </div>
+                        <div class="text-right w-full md:w-auto">
+                            <span class="text-xs text-slate-500 block">과거 도달 파급 등급</span>
+                            <span id="gradeBadge" class="text-4xl font-extrabold font-orbitron text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-500">D</span>
+                        </div>
+                    </div>
+
+                    <!-- RTCF Breakdowns Grid (Total 100 Points) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        
+                        <!-- R: Role -->
+                        <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/50 flex flex-col gap-2">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                                    <span class="font-orbitron text-sm">R</span> Role (기자 페르소나 설정)
+                                </span>
+                                <span id="scoreR" class="text-sm font-bold font-orbitron text-slate-300">0/25</span>
+                            </div>
+                            <p id="descR" class="text-xs text-slate-300 leading-relaxed min-h-[48px]"></p>
+                        </div>
+
+                        <!-- T: Task -->
+                        <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/50 flex flex-col gap-2">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                                    <span class="font-orbitron text-sm">T</span> Task (기사 작성 구체성)
+                                </span>
+                                <span id="scoreT" class="text-sm font-bold font-orbitron text-slate-300">0/25</span>
+                            </div>
+                            <p id="descT" class="text-xs text-slate-300 leading-relaxed min-h-[48px]"></p>
+                        </div>
+
+                        <!-- C: Context -->
+                        <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/50 flex flex-col gap-2">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                                    <span class="font-orbitron text-sm">C</span> Context (대상·분량·제한조건)
+                                </span>
+                                <span id="scoreC" class="text-sm font-bold font-orbitron text-slate-300">0/25</span>
+                            </div>
+                            <p id="descC" class="text-xs text-slate-300 leading-relaxed min-h-[48px]"></p>
+                        </div>
+
+                        <!-- F: Format -->
+                        <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-800/50 flex flex-col gap-2">
+                            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                <span class="text-xs font-bold text-pink-400 flex items-center gap-1.5">
+                                    <span class="font-orbitron text-sm">F</span> Format (결과물 구조 형식)
+                                </span>
+                                <span id="scoreF" class="text-sm font-bold font-orbitron text-slate-300">0/25</span>
+                            </div>
+                            <p id="descF" class="text-xs text-slate-300 leading-relaxed min-h-[48px]"></p>
+                        </div>
+
+                    </div>
+
+                    <!-- Reporter's Live Commentary -->
+                    <div class="bg-gradient-to-br from-slate-900 to-red-950/20 p-5 rounded-xl border border-red-900/30 flex flex-col gap-2 relative">
+                        <div class="absolute -top-3 left-4 px-3 py-0.5 bg-red-950 border border-red-800 rounded-full text-[10px] font-bold text-red-400 uppercase tracking-widest">
+                            나미래 기자의 채점 총평 및 재지침 독려
+                        </div>
+                        <div class="flex items-start gap-3 mt-1">
+                            <div class="text-red-400 text-xl pt-1">
+                                <i class="fa-solid fa-microphone-lines animate-pulse"></i>
+                            </div>
+                            <div class="flex-grow">
+                                <p id="reporterOpinion" class="text-xs sm:text-sm text-slate-100 leading-relaxed font-light italic">
+                                    <!-- Dynamic response -->
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions Bar with Screenshot Button only -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mt-auto pt-4 border-t border-slate-900 gap-4">
+                        <!-- Screenshot Save Button -->
+                        <button onclick="saveScreenshot()" class="w-full sm:w-auto text-xs text-slate-200 hover:text-white transition-all flex items-center justify-center gap-2 font-bold bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 px-5 py-2.5 rounded-lg border border-red-500/30 hover:shadow-[0_0_15px_rgba(239,68,68,0.4)] active:scale-[0.97]">
+                            <i class="fa-solid fa-camera animate-pulse"></i>
+                            <span>나미래 특파원 평가 이미지 저장</span>
+                        </button>
+                        <span class="text-[10px] text-slate-500 font-mono">SECURE CHRONO-PORTAL PROMPT</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Custom Popups / Alerts -->
+    <div id="customToast" class="fixed bottom-6 right-6 bg-slate-900 border border-red-500/50 text-red-200 px-5 py-3 rounded-xl shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-2">
+        <i id="toastIcon" class="fa-solid fa-info-circle text-red-400"></i>
+        <span id="toastMsg" class="text-sm">데이터 연동 완료</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-xs text-slate-500">
+                © 2080 ANTARK-INCHEON ECO-MEDIA. ALL TIME-LINES PRESERVED. 
+            </p>
+            <p class="text-[10px] text-slate-600 mt-1">
+                본 교구는 미래의 인천을 구하고 탄소 배출량을 제어하기 위해 땀 흘려 지도하시는 코딩 선생님을 응원합니다.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Firebase / Gemini Scripts & Logic -->
+    <script>
+        // API key standard: empty string for runtime injection
+        const apiKey = "";
+
+        // Custom Toast Notification System
+        function showToast(msg, icon = 'fa-circle-info') {
+            const toast = document.getElementById('customToast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = `fa-solid ${icon} text-red-400`;
+            
+            // Slide Up / Fade In
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Heuristic Scoring tailored for Incheon and Target, Length, Constraints (C)
+        function calculateHeuristicScore(prompt) {
+            let scoreR = 0;
+            let scoreT = 0;
+            let scoreC = 0;
+            let scoreF = 0;
+
+            let descR = "기후 특파원 '나미래'의 정체성과 직책이 누락되었소. '너는 2080년 수몰된 인천에 고립된 수석 기후특파원 나미래야' 같은 페르소나 역할을 꼭 넣어주게.";
+            let descT = "임무가 너무 평범하네. 2026년 사람들을 아연실색하게 만들 '르포식 경고 기사 작성'과 같은 명확한 전개 행위 지시를 주입해주게.";
+            let descC = "전달 대상, 목표 분량, 그리고 제외되거나 필수 포함해야 할 제한조건이 명시되지 않았소. 과거 독자층, 구체적인 분량, 지켜야 할 제약을 추가하게.";
+            let descF = "독자를 단번에 사로잡을 마크다운 표 구조, 신문 조간 사설 형태 등 출력 구조를 가이드라인으로 제어하는 설정이 누락되었소.";
+
+            const lowerPrompt = prompt.toLowerCase();
+
+            // R: Role checking
+            if (/(나미래|기자|특파원|기후전문가|서바이벌|칼럼니스트)/.test(lowerPrompt) && /(너는|역할|페르소나)/.test(lowerPrompt)) {
+                scoreR = 25;
+                descR = "아주 훌륭하군! '나미래' 기자의 절박한 영혼과 저널리스트 페르소나가 완벽히 투사되어 AI가 르포 기사를 가장 실감 나게 조형할 걸세.";
+            } else if (/(기자|나미래|특파원)/.test(lowerPrompt)) {
+                scoreR = 17;
+                descR = "인물 지정을 하긴 했지만, '2080년 물에 잠긴 인천의 마지막 기자'처럼 극한의 배경 묘사를 수식어로 보완하면 몰입도가 급상승할 것이네.";
+            }
+
+            // T: Task checking
+            if (/(기사|칼럼|보도|선언문|호소문|뉴스|글을)/.test(lowerPrompt) && /(작성|경고|알려|촉구|설계|전달)/.test(lowerPrompt)) {
+                scoreT = 25;
+                descT = "과거 인류에게 지구온난화 위협 기사를 쏘아 보내 사람들의 행동 양식을 고쳐놓으라는 정밀한 작업 타깃(Task)이 잘 서술되었네.";
+            } else if (/(기사|글)/.test(lowerPrompt)) {
+                scoreT = 15;
+                descT = "지시 사항이 다소 단조롭구먼. 기사 속에 담겨야 할 세부 요소(구체적 하수 붕괴 원인, 미래 전경)를 명시하여 기사 뼈대를 지시해보게.";
+            }
+
+            // C: Context checking (Target, Length, Constraints)
+            let hasTarget = /(독자|사람|인류|시민|대중|과거|2026|학생|교사|학부모)/.test(lowerPrompt);
+            let hasLength = /(자|글자|줄|단락|분량|바이트|단어|이내|이상|페이지|장|쪽)/.test(lowerPrompt);
+            let hasConstraint = /(제한|조건|포함|제외|필수|하지 말|마라|단,)/.test(lowerPrompt);
+
+            if (hasTarget && hasLength && hasConstraint) {
+                scoreC = 25;
+                descC = "기막히는 설계구만! 기사를 전달할 구체적 대상(Target), 분량(Length) 규정, 그리고 지켜야 할 엄격한 제한조건(Constraints)의 삼박자가 조화롭네.";
+            } else if ((hasTarget && hasLength) || (hasTarget && hasConstraint) || (hasLength && hasConstraint)) {
+                scoreC = 16;
+                let missing = [];
+                if (!hasTarget) missing.push("독자 대상");
+                if (!hasLength) missing.push("기사 분량");
+                if (!hasConstraint) missing.push("상세 제한조건");
+                descC = `맥락 구성 요소 중 일부가 비어있소. [${missing.join(', ')}]을(를) 보완한다면 AI가 샛길로 새지 않는 정교한 결과물을 낼 걸세.`;
+            } else if (hasTarget || hasLength || hasConstraint) {
+                scoreC = 10;
+                descC = "맥락(Context)이 많이 미흡하오. AI가 아무 독자에게나 너무 길거나 의미 없는 칼럼을 써내지 않도록 대상, 분량, 제한규정을 더 심어주게.";
+            }
+
+            // F: Format checking
+            if (/(마크다운|형식|포맷|구조|헤더|소제목|리스트|표|칼럼|분량|뉴스룸)/.test(lowerPrompt)) {
+                scoreF = 25;
+                descF = "기사의 가시성과 레이아웃을 표나 마크다운 형태로 규제하여, 2026년 인류에게 전송되었을 때 최상의 가독성으로 즉시 전파될 수 있겠군.";
+            } else if (/(형태|방식)/.test(lowerPrompt)) {
+                scoreF = 15;
+                descF = "출력 형식에 대한 언급이 희미하네. '마크다운 리스트 형태로 보완', '소제목 3단 칼럼 구성' 등의 강력한 통제력을 덧씌워 AI의 오작동을 차단하게.";
+            }
+
+            const total = scoreR + scoreT + scoreC + scoreF;
+            return { total, scoreR, scoreT, scoreC, scoreF, descR, descT, descC, descF };
+        }
+
+        // Main prompt analysis driver
+        async function analyzePrompt() {
+            const prompt = document.getElementById('promptInput').value.trim();
+            if (!prompt) {
+                showToast("송신 장치에 평가할 프롬프트가 들어있지 않네. 신호를 연결하고 다시 입력해주게!", "fa-triangle-exclamation");
+                return;
+            }
+
+            // UI 상태 즉각 초기화 및 로딩 화면 활성화
+            document.getElementById('placeholderState').classList.add('hidden');
+            document.getElementById('reportState').classList.add('hidden');
+            document.getElementById('reportState').classList.remove('flex');
+            document.getElementById('loadingState').classList.remove('hidden');
+
+            const startTimestamp = Date.now();
+            let resultObj = null;
+
+            try {
+                if (apiKey) {
+                    const systemPrompt = `
+                        당신은 2080년 기후 온난화로 인해 인천(송도, 인천대교, 청라지구 등)이 완전히 바다에 수몰된 절체절명의 시대 속에서 살아남은 '나미래' 수석 기후특파원입니다.
+                        과거 2026년 사람들에게 '인천이 물에 잠기는 끔찍한 미래'를 막기 위한 지구온난화 경고 기사를 작성하도록 AI를 교육하는 최고의 기획자입니다.
+                        입력받은 기사용 프롬프트를 RTCF(Role, Task, Context, Format) 모델에 근거해 가차 없이, 그리고 애정 가득하게 채점하여 분석 보고서를 작성해주십시오 (각 만점 25점, 총점 100점).
+                        
+                        * C (Context) 맥락 항목 평가 기준:
+                        기사를 전달할 구체적 대상(Target), 글의 상세 분량 제한(Length), 그리고 제외어 및 수치 표현 등의 제한조건(Constraints)이 촘촘히 묘사되어 있는가에 초점을 맞춰 채점해 주십시오.
+
+                        - 2080년 수몰된 인천에 살고 있는 나미래 기자의 처절하고 다급하면서도 재치 있는 잔소리를 섞어 부족한 부분을 콕 짚어주고, "꼭 다시 프롬프트를 보완해서 재전송해 달라"는 독려와 강력한 재작성 유도를 포함하는 평론을 만들어야 합니다.
+                        - 결과는 반드시 이 JSON 규격으로만 완벽히 반환해야 합니다:
+                        {
+                          "scoreR": 숫자 (0~25),
+                          "descR": "Role(2080년 수몰된 인천의 기상 특파원 역할 지정 등)에 대한 구체적 평가",
+                          "scoreT": "Task(2026년 사람들을 겨냥한 경고 기사 작성 및 행동 수칙 지시 등)에 대한 평가",
+                          "scoreC": "Context(전달 대상 독자층, 엄격한 글 분량, 특정 제한조건 등 맥락 제약의 구체성)에 대한 구체적 평가",
+                          "scoreF": "Format(독자의 눈길을 끌 기사 포맷, 칼럼 레이아웃, 마크다운 구성 등 제어력)에 대한 평가",
+                          "reporterOpinion": "나미래 기자의 목소리가 들리는 듯한 재치 넘치는 부족한 점 분석과 극복 격려의 따뜻한 평론"
+                        }
+                    `;
+
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: `다음 2026년 수송용 경고 기사 프롬프트를 나미래 기자의 눈으로 RTCF 정밀 채점해다오:\n"${prompt}"` }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "OBJECT",
+                                properties: {
+                                    scoreR: { type: "INTEGER" },
+                                    descR: { type: "STRING" },
+                                    scoreT: { type: "INTEGER" },
+                                    descT: { type: "STRING" },
+                                    scoreC: { type: "INTEGER" },
+                                    descC: { type: "STRING" },
+                                    scoreF: { type: "INTEGER" },
+                                    descF: { type: "STRING" },
+                                    reporterOpinion: { type: "STRING" }
+                                },
+                                required: ["scoreR", "descR", "scoreT", "descT", "scoreC", "descC", "scoreF", "descF", "reporterOpinion"]
+                            }
+                        }
+                    };
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const responseData = await response.json();
+                    let rawJsonText = responseData.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+                    
+                    // markdown wrapper clean up
+                    if (rawJsonText.includes("```json")) {
+                        rawJsonText = rawJsonText.split("```json")[1].split("```")[0];
+                    } else if (rawJsonText.includes("```")) {
+                        rawJsonText = rawJsonText.split("```")[1].split("```")[0];
+                    }
+                    
+                    resultObj = JSON.parse(rawJsonText.trim());
+                    
+                    // 강제 정수화 캐스팅으로 점수 오차 방지
+                    resultObj.scoreR = parseInt(resultObj.scoreR) || 0;
+                    resultObj.scoreT = parseInt(resultObj.scoreT) || 0;
+                    resultObj.scoreC = parseInt(resultObj.scoreC) || 0;
+                    resultObj.scoreF = parseInt(resultObj.scoreF) || 0;
+                } else {
+                    // Fallback to Heuristic engine if apiKey is empty or fails
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    const localScores = calculateHeuristicScore(prompt);
+                    let opinion = "";
+
+                    if (localScores.total >= 85) {
+                        opinion = `💡 "경이롭습니다! 이 정도 완성도의 타임라인 무선이라면 2026년 인류뿐 아니라 외계인도 탄소 감축에 나설 지경이군요! 자네가 넘겨준 '나미래' 역할, '정교하게 규정된 독자층과 제한조건' 등 맥락 설계, '마크다운 칼럼' 포맷 덕분에 2026년 대형 미디어를 이 기사가 정복할 수 있겠소! 고맙네, 내 과거를 바꾸어 주어서!"`;
+                    } else if (localScores.total >= 60) {
+                        opinion = `⚠️ "나쁘지 않은 주파수 통신입니다만... 인천 앞바다 온도가 펄펄 끓고 송도가 잠기기 직전인데 이 정도의 두루뭉술한 내용으론 2026년 사람들이 '어휴 날씨 더워졌네' 하고 에어컨만 더 켤 것입니다! 어떤 대상을 겨냥해 글을 쓰고, 분량 한계 및 지켜야 할 조건(Context)을 더 확실히 명시하여 다시 한 번 전송해 주게나!"`;
+                    } else {
+                        opinion = `🚨 "이보게! 2026년 사람들이 지금 영종도 공항에서 편하게 해외여행 다니며 이 프롬프트를 보면 코웃음이나 칠 걸세! '내가 2080년 수몰 인천의 기자(Role)'라는 전제를 강력히 고정하고, 누구에게 보낼지(대상), 얼마나 길게 쓸지(분량), 그리고 지켜야 할 엄격한 지침(제한조건)을 보완해서 꼭 다시 한 번 쏘아 올려 보게!"`;
+                    }
+
+                    resultObj = {
+                        scoreR: localScores.scoreR,
+                        descR: localScores.descR,
+                        scoreT: localScores.scoreT,
+                        descT: localScores.descT,
+                        scoreC: localScores.scoreC,
+                        descC: localScores.descC,
+                        scoreF: localScores.scoreF,
+                        descF: localScores.descF,
+                        reporterOpinion: opinion
+                    };
+                }
+
+                // Minimum simulated wait to preserve UX immersion
+                const elapsed = Date.now() - startTimestamp;
+                if (elapsed < 1200) {
+                    await new Promise(resolve => setTimeout(resolve, 1200 - elapsed));
+                }
+
+                renderAnalysisResults(resultObj);
+
+            } catch (err) {
+                console.error("API error, fallback triggered", err);
+                showToast("타임라인 동기화 오차로 임시 계측 분석기를 가동했네!");
+                
+                const localScores = calculateHeuristicScore(prompt);
+                const fallbackOpinion = `🛠️ [비상 복구 신호 수신] "통신 잡음이 심해 아날로그 무선으로 자동 연동했네. 자네의 기사 프롬프트 총점은 ${localScores.total}점 수준이오. 부족한 점을 분석표에서 확인하여, 2026년의 역사를 바꾸기 위해 프롬프트를 보완한 뒤 꼭 다시 타전해 주게나!"`;
+                
+                renderAnalysisResults({
+                    scoreR: localScores.scoreR,
+                    descR: localScores.descR,
+                    scoreT: localScores.scoreT,
+                    descT: localScores.descT,
+                    scoreC: localScores.scoreC,
+                    descC: localScores.descC,
+                    scoreF: localScores.scoreF,
+                    descF: localScores.descF,
+                    reporterOpinion: fallbackOpinion
+                });
+            }
+        }
+
+        // Render elements
+        function renderAnalysisResults(data) {
+            // 강제 숫자 형변환 및 NaN 방어
+            const rVal = parseInt(data.scoreR) || 0;
+            const tVal = parseInt(data.scoreT) || 0;
+            const cVal = parseInt(data.scoreC) || 0;
+            const fVal = parseInt(data.scoreF) || 0;
+            const total = rVal + tVal + cVal + fVal;
+
+            // 로딩 상태를 제거하고 결과를 활성화 (무조건 전환 보장)
+            document.getElementById('loadingState').classList.add('hidden');
+            const reportEl = document.getElementById('reportState');
+            reportEl.classList.remove('hidden');
+            reportEl.classList.add('flex'); // flex 적용 보장
+
+            // Circle dash animation
+            const maxOffset = 251.2;
+            const offsetValue = maxOffset - (maxOffset * (total / 100));
+            const progressCircle = document.getElementById('scoreProgressCircle');
+            
+            progressCircle.style.strokeDashoffset = maxOffset;
+            setTimeout(() => {
+                progressCircle.style.strokeDashoffset = offsetValue;
+            }, 50);
+
+            // Set scores
+            document.getElementById('totalScoreText').innerText = total;
+            document.getElementById('scoreR').innerText = `${rVal}/25`;
+            document.getElementById('scoreT').innerText = `${tVal}/25`;
+            document.getElementById('scoreC').innerText = `${cVal}/25`;
+            document.getElementById('scoreF').innerText = `${fVal}/25`;
+
+            // Descriptions
+            document.getElementById('descR').innerText = data.descR;
+            document.getElementById('descT').innerText = data.descT;
+            document.getElementById('descC').innerText = data.descC;
+            document.getElementById('descF').innerText = data.descF;
+
+            // Opinion & Core layout
+            document.getElementById('reporterOpinion').innerText = data.reporterOpinion;
+
+            // Grade settings
+            let grade = 'D';
+            let title = '인류 구원 파국 신호';
+            let access = '송신 불안정 (2026년 도달 실패)';
+            let badgeClass = 'from-red-500 to-pink-600';
+
+            if (total >= 90) {
+                grade = 'A+';
+                title = '타임라인 영구 개혁적 특종 기사';
+                access = '완벽 송신 (2026년 모든 언론사 자동 게재)';
+                badgeClass = 'from-emerald-400 to-cyan-400';
+            } else if (total >= 80) {
+                grade = 'A';
+                title = '역사를 바꾸기 충분한 긴급 타전';
+                access = '송신 양호 (2026년 대형 미디어 뉴스룸 도달)';
+                badgeClass = 'from-cyan-400 to-blue-500';
+            } else if (total >= 65) {
+                grade = 'B';
+                title = '지각 변동 미달, 보조 전파 수준';
+                access = '일부 도달 (소규모 인터넷 매체 및 블로그 도달)';
+                badgeClass = 'from-amber-400 to-orange-500';
+            } else if (total >= 40) {
+                grade = 'C';
+                title = '과거 전송 불가 수준의 일반 잡음';
+                access = '도달 불가 (스팸 메시지로 분류됨)';
+                badgeClass = 'from-orange-500 to-red-500';
+            }
+
+            const gradeBadge = document.getElementById('gradeBadge');
+            gradeBadge.innerText = grade;
+            gradeBadge.className = `text-4xl font-extrabold font-orbitron text-transparent bg-clip-text bg-gradient-to-r ${badgeClass}`;
+
+            document.getElementById('gradeTitle').innerText = title;
+            document.getElementById('accessLevelText').innerText = access;
+            document.getElementById('accessLevelText').className = `font-bold ${total >= 80 ? 'text-cyan-400' : (total >= 65 ? 'text-amber-400' : 'text-red-400')}`;
+
+            showToast("2080년 인천 대피소에서 실시간 피드백을 완성했소!", "fa-signal");
+        }
+
+        // Save Results screen as Image (Screenshot Feature)
+        function saveScreenshot() {
+            const resultBox = document.getElementById('resultContainer');
+            if (!resultBox) return;
+
+            // Show capturing toast
+            showToast("시간 흐름의 성적표를 화상 기록으로 캡처하고 있소...", "fa-camera");
+
+            // Define download filename
+            const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+            const scoreVal = document.getElementById('totalScoreText').innerText;
+            const fileName = `2080_기후특파원_나미래_성적표_${scoreVal}점_${dateStr}.png`;
+
+            // Capture options for sleek & high-res render
+            html2canvas(resultBox, {
+                backgroundColor: '#050811', // Matches cyber-dark theme background
+                scale: 2, // Doubled resolution for super-crisp text on all screens
+                useCORS: true, // Prevents external asset rendering blocks
+                logging: false,
+                ignoreElements: (element) => {
+                    // Ignore elements that are currently hidden inside the container
+                    return element.classList.contains('hidden');
+                }
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast("이미지 전송 저장이 완벽히 완료되었네! 친구들과 경쟁해 보게나.", "fa-circle-check");
+            }).catch(err => {
+                console.error("Screenshot error:", err);
+                showToast("시공간 통신망 저항으로 이미지 다운로드에 실패했네.", "fa-triangle-exclamation");
+            });
+        }
+    </script>
+</body>
+</html>
